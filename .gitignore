@@ -1,0 +1,8 @@
+*
+!/
+!*.*
+!README
+!LICENSE
+/.vscode
+/__pycache__
+tempCodeRunner.py
