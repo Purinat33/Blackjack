@@ -6,5 +6,9 @@ if __name__ == '__main__':
     poker.shuffle()
     print('-----------')
     poker.print_deck()
-    print(poker.deal_card(True))
-    print(poker.deal_card(True))
+    
+    john = deck.Player()
+    # john.print_hand()
+    john.hands.append(('Ace', 'Hearts'))
+    john.hands.append(('2', 'Clubs'))
+    john.print_hand()
