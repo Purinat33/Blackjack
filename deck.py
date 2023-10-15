@@ -86,16 +86,48 @@ class Player:
     
     def print_hand(self): # Print the entire hand
         # print in box format, Card on top, score on the bottom
+        non_ace = []
+        ace = []
         print(f'---{self.name}\'s hands---')
         for card in self.hands:
             print(f'{card[0]} of {card[1]}\t|')
-            print(f'{self.card_score(card)}\t\t|')
+            if card[0] != 'Ace':
+                non_ace.append(card)
+                print(f'{self.card_score(card)}\t\t|')
+            else:
+                ace.append(card)
+                print(f'1 or 11\t\t|')
+                
             print(f'--------------------')
             
         # print total hand score
+        non_ace_score = 0
+        for card in non_ace:
+            non_ace_score += self.card_score(card)
+        
+        ace_score = 0
+        if len(ace) > 1:
+            # Both can't be 11 since it will be over 21
+            for card in ace:
+                ace_score += 1
+        else:
+            for card in ace:
+                # Check non_ace_scre
+                # if sum > 21 then just 1
+                if non_ace_score + 11 > 21:
+                    ace_score += 1
+                else:
+                    ace_score += 11
+                    
+        
         print(f'--------------------')
-        print(f'Total: {self.hand_score()}')
+        print(f'Total (Excluding_Ace): {non_ace_score}')
+        print(f'Total (Ace Only): {ace_score}')
         print(f'--------------------')
+        print(f'Total: {ace_score + non_ace_score}')
+        print(f'--------------------')
+
+        
         
         
         
