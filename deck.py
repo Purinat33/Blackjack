@@ -43,26 +43,46 @@ class Player:
         self.hands = []
         self.name = 'Player'
         
-    def hand_score(self): # List of cards on hand (Score of all cards on hand)
-        score = 0
-        card_score = {'Ace': 11, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
-        for card in self.hands:
-            rank = card[0]
-            score += card_score[rank]
-        
-        return score    
-    
     
     def card_score(self, card: (str, str)): #Score of a particular card
+        # In the end we will ignore ace
         card_score = {'Ace': 11, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
         rank = card[0]
         return card_score[rank]
     
     
-    def calculate_ace(self):
-        # Ace is either 1 or 11 based on the circumstance (Should probably fix scoring system afterward)
-        pass
-
+    def calculate_ace(self, hand_score):
+        if (hand_score + 11) > 21:
+            # If we add and it goes over 21 then just add 1 
+            return 1
+        else:
+            return 11
+        
+    
+    def hand_score(self): # List of cards on hand (Score of all cards on hand)
+        # If theres an ace, swap it with the last element of the list
+        score = 0
+        non_ace = []
+        ace_list = []
+        
+        for i in range(len(self.hands)):
+            card = self.hands[i]
+            if card[0] != 'Ace':
+                non_ace.append(self.hands[i])
+            else:
+                ace_list.append(self.hands[i])
+                
+        
+        for card in non_ace:
+            score += self.card_score(card) 
+            
+        if len(ace_list) > 0:
+            # Add ace point to each element
+            for card in ace_list:
+                score += self.calculate_ace(score)
+           
+        return score
+    
     
     def print_hand(self): # Print the entire hand
         # print in box format, Card on top, score on the bottom
