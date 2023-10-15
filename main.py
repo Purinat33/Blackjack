@@ -11,5 +11,6 @@ if __name__ == '__main__':
     # john.print_hand()
     john.hands.append(('Ace', 'Hearts'))
     john.hands.append(('2', 'Clubs'))
-    john.hands.append(('10', 'Spades'))
+    john.hands.append(('9', 'Spades'))
+    john.hands.append(('5', 'Spades'))
     john.print_hand()
