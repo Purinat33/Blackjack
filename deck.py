@@ -128,6 +128,9 @@ class Player:
         print(f'--------------------')
 
         
+class Blackjack:
+    def __init__(self) -> None:
+        pass
         
         
         

@@ -2,15 +2,7 @@ import deck
 
 if __name__ == '__main__':
     poker = deck.Deck()
-    poker.print_deck()
-    poker.shuffle()
-    print('-----------')
-    poker.print_deck()
+    for i in range(5):
+        poker.shuffle() 
     
-    john = deck.Player()
-    # john.print_hand()
-    john.hands.append(('Ace', 'Hearts'))
-    john.hands.append(('2', 'Clubs'))
-    john.hands.append(('9', 'Spades'))
-    john.hands.append(('5', 'Spades'))
-    john.print_hand()
+    dealer = deck.Player()
