@@ -1,5 +1,7 @@
 package com.game.software;
 
+import java.util.Scanner;
+
 public class BlackJack {
     public static void welcome(){
         System.out.println("Welcome to BlackJack");
@@ -9,10 +11,26 @@ public class BlackJack {
     }
 
     public static Player getWinner(Player p1, Player p2){
-        return p1.handValue()>p2.handValue()?p1:p2; // Suppose to be 21 and more logic but Ill do it LATER
+
+        System.out.println(p1.getUsername() + "'s Value: " + p1.handValue());
+        System.out.println(p2.getUsername() + "'s Value: " + p2.handValue());
+        if(p1.handValue() > p2.handValue() && p1.handValue() <= 21){
+            return p1;
+        } else if (p2.handValue() > p1.handValue() && p2.handValue() <= 21) {
+            return p2;
+        } else if(p2.handValue() > 21 && p1.handValue() <= 21){
+            return p1;
+        }
+        else if(p1.handValue() > 21 && p2.handValue() <= 21){
+            return p2;
+        }
+        else return new Player("Draw");
     }
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String choice;
+
         welcome();
         System.out.println("Init Card");
         Deck.createDeck();
@@ -20,19 +38,45 @@ public class BlackJack {
         System.out.println("Total Cards: " + Deck.getDeck().size());
         System.out.println("------------");
         System.out.println("Shuffle Card");
-        Deck.shuffle();
+        for(int i = 0 ; i < 20; i++){
+            Deck.shuffle();
+            Deck.shuffle();
+        }
         System.out.println("----------");
         Player p1 = new Player("P1");
         p1.draw();
         p1.draw();
-        System.out.println(p1);
+        while (true){
+            System.out.println(p1);
+            if (p1.handValue() >= 21){
+                break;
+            }
 
-        Player bot = new Player("Bot");
-        bot.draw();
-        bot.draw();
+            System.out.print("Hit or Stand?: ");
+            choice = sc.nextLine();
+            choice = choice.toUpperCase();
+            if(choice.contains("H") || choice.contains("HIT")){
+                p1.draw();
+            }
+            else if(choice.contains("S") || choice.contains("STAND")){
+                break;
+            }
+            else{
+                System.out.println("Error try again");
+            }
+
+        }
+        System.out.println("---------------------");
+
+
+        Bot bot = new Bot("bot");
+        bot.play();
         System.out.println(bot);
-
+        System.out.println("-------------------------------");
         Player winner = getWinner(p1, bot);
-        System.out.println("The winnder is: " + winner.getUsername());
+        System.out.println("The winner is: " + winner.getUsername());
+
+
+        sc.close();
     }
 }

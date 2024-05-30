@@ -19,11 +19,26 @@ public class Player {
     }
 
     public int handValue(){
+
         int sum = 0;
         for (int i = 0 ; i <hands.size();i++){
-            sum += this.hands.get(i).getValue();
+            if(!this.hands.get(i).getName().equals("A"))
+                sum += this.hands.get(i).getValue();
+            else{
+                if(sum + 11 <= 21) {
+                    // If Ace is 11, and it wouldn't go past 21 then that ace is 11
+                    sum += 11;
+                }
+                else{
+                    sum += 1;
+                }
+            }
         }
         return sum;
+    }
+
+    public ArrayList<Card> getHands(){
+        return this.hands;
     }
 
     @Override
@@ -39,5 +54,15 @@ public class Player {
         return val.toString();
     }
 
+    public void testHand(){
+        Card card = new Card("A", "Spades");
+        Card card2 = new Card("A", "Hearts");
+        Card card3 = new Card("A", "Clubs");
+        // Expected = 12?
+        this.hands.add(card);
+        this.hands.add(card2);
+        this.hands.add(card3);
+        System.out.println(this);
+    }
 
 }
